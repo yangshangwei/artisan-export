@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.artisan.dao.CircuitBusinessinfoModelMapper" >
+
+ 
+	<!-- 查询工单信息 -->
+	<select id="selectFormInfoByFlowId"   resultType="map"  parameterType="java.lang.String">
+		SELECT
+				DISTINCT
+				bfi.flow_title,
+				bfi.flow_desc,
+				ptc.city_id_a,
+				bfi.tune_number,
+				bfi.send_time,
+				bfi.limit_time,
+				bfi.flow_no,
+				pcb.esop_order_no,
+				pcb.esop_customer_no,
+				pcb.esop_customer_name,
+				pcb.esop_province_name,
+				pcb.esop_service_level,
+				pcb.esop_manager,
+				pcb.esop_phone_no,
+				pcb.esop_domain_level,
+				bfi.send_man,
+				pcb.send_no,
+				pcb.scheduling_type 
+		FROM
+				bpm_form_info bfi
+				LEFT JOIN proc_circuit_businessinfo pcb ON bfi.flow_id = pcb.flow_id 
+				LEFT JOIN proc_temp_circuit ptc on bfi.flow_id = ptc.flow_id
+		WHERE
+				bfi.flow_id = #{flowId,jdbcType=VARCHAR}
+	</select>
+	
+</mapper>
